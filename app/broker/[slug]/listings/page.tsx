@@ -5,6 +5,10 @@ import Link from "next/link";
 import { ArrowLeft, Filter } from "lucide-react";
 import type { Metadata } from "next";
 
+export function generateStaticParams() {
+  return brokers.map((b) => ({ slug: b.slug }));
+}
+
 export async function generateMetadata({ params }: { params: Promise<{ slug: string }> }): Promise<Metadata> {
   const { slug } = await params;
   const broker = brokers.find(b => b.slug === slug);
