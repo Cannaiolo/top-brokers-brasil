@@ -85,7 +85,7 @@ export default function BrokerRankCard({ broker, compact = false }: Props) {
         borderLeft: isTop3 ? `3px solid ${isRank1 ? "#c9a84c" : broker.rank === 2 ? "#a0aec0" : "#cd7f32"}` : "3px solid transparent",
       }}
     >
-      <div style={{ display: "flex", alignItems: "center", gap: 16 }}>
+      <div style={{ display: "flex", alignItems: "center", gap: 16, flexWrap: "wrap" }}>
         {/* Rank */}
         <div style={{ minWidth: compact ? 36 : 48, textAlign: "center" }}>
           <div className="rank-number" style={{
@@ -105,7 +105,7 @@ export default function BrokerRankCard({ broker, compact = false }: Props) {
         </div>
 
         {/* Info */}
-        <div style={{ flex: 1, minWidth: 0 }}>
+        <div style={{ flex: 1, minWidth: 180 }}>
           <div style={{ display: "flex", alignItems: "center", gap: 8, flexWrap: "wrap" }}>
             <Link href={`/broker/${broker.slug}`} style={{ textDecoration: "none" }}>
               <span style={{
@@ -155,7 +155,7 @@ export default function BrokerRankCard({ broker, compact = false }: Props) {
         )}
 
         {/* Score */}
-        <div style={{ textAlign: "right", display: "flex", flexDirection: "column", alignItems: "center", gap: 8 }}>
+        <div style={{ textAlign: "right", display: "flex", flexDirection: "column", alignItems: "center", gap: 8, marginLeft: "auto" }}>
           <ScoreBadge score={broker.score} label={broker.scoreLabel} />
           {!compact && (
             <div style={{ display: "flex", gap: 8 }}>
@@ -172,7 +172,7 @@ export default function BrokerRankCard({ broker, compact = false }: Props) {
 
       {/* Badge strip */}
       {!compact && broker.badge && (
-        <div style={{ marginTop: 12, paddingTop: 12, borderTop: "1px solid var(--border)", display: "flex", alignItems: "center", gap: 8 }}>
+        <div style={{ marginTop: 12, paddingTop: 12, borderTop: "1px solid var(--border)", display: "flex", alignItems: "center", gap: 8, flexWrap: "wrap" }}>
           <span className="badge badge-gold" style={{ fontSize: 10 }}>★ {broker.badge}</span>
           <span style={{ fontSize: 11, color: "var(--text-muted)" }}>
             Score de Confiança: <strong>{broker.trustScore}</strong>
