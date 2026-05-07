@@ -85,88 +85,94 @@ export default function BrokerRankCard({ broker, compact = false }: Props) {
         borderLeft: isTop3 ? `3px solid ${isRank1 ? "#c9a84c" : broker.rank === 2 ? "#a0aec0" : "#cd7f32"}` : "3px solid transparent",
       }}
     >
-      <div style={{ display: "flex", alignItems: "center", gap: 16, flexWrap: "wrap" }}>
-        {/* Rank */}
-        <div style={{ minWidth: compact ? 36 : 48, textAlign: "center" }}>
-          <div className="rank-number" style={{
-            fontSize: compact ? 22 : 28,
-            color: isRank1 ? "#c9a84c" : broker.rank <= 3 ? "#0d1b2a" : "#4a5568",
-          }}>
-            #{broker.rank}
-          </div>
-          <div style={{ marginTop: 2 }}>
-            <RankMovement broker={broker} />
-          </div>
-        </div>
-
-        {/* Avatar */}
-        <div className="broker-avatar" style={{ fontSize: compact ? 14 : 16 }}>
-          {broker.avatar}
-        </div>
-
-        {/* Info */}
-        <div style={{ flex: 1, minWidth: 180 }}>
-          <div style={{ display: "flex", alignItems: "center", gap: 8, flexWrap: "wrap" }}>
-            <Link href={`/broker/${broker.slug}`} style={{ textDecoration: "none" }}>
-              <span style={{
-                fontSize: compact ? 14 : 15,
-                fontWeight: 700,
-                color: "var(--text-primary)",
-                fontFamily: "Space Grotesk, sans-serif",
-              }}>
-                {broker.name}
-              </span>
-            </Link>
-            <ZoneBadge zone={broker.zone} />
-          </div>
-          <div style={{ fontSize: 12, color: "var(--text-muted)", marginTop: 2 }}>
-            {broker.city}, {broker.state}
-          </div>
-          {!compact && (
-            <div style={{ fontSize: 11, color: "var(--text-muted)", marginTop: 4, fontStyle: "italic" }}>
-              {broker.microcopy}
+      <div className="flex flex-col sm:flex-row sm:items-center gap-4 sm:gap-6">
+        {/* Left side: Rank, Avatar, Info */}
+        <div className="flex items-center gap-3 sm:gap-4 flex-1 min-w-0">
+          {/* Rank */}
+          <div style={{ minWidth: compact ? 36 : 48, textAlign: "center", flexShrink: 0 }}>
+            <div className="rank-number" style={{
+              fontSize: compact ? 22 : 28,
+              color: isRank1 ? "#c9a84c" : broker.rank <= 3 ? "#0d1b2a" : "#4a5568",
+            }}>
+              #{broker.rank}
             </div>
-          )}
-          {!compact && (
-            <div style={{ display: "flex", gap: 8, marginTop: 8, flexWrap: "wrap" }}>
-              {broker.mainNeighborhoods.slice(0, 2).map(n => (
-                <span key={n} style={{ fontSize: 10, padding: "2px 8px", background: "#f1f5f9", borderRadius: 4, color: "#4a5568", fontWeight: 500 }}>{n}</span>
-              ))}
+            <div style={{ marginTop: 2 }}>
+              <RankMovement broker={broker} />
             </div>
-          )}
+          </div>
+
+          {/* Avatar */}
+          <div className="broker-avatar" style={{ fontSize: compact ? 14 : 16, flexShrink: 0 }}>
+            {broker.avatar}
+          </div>
+
+          {/* Info */}
+          <div style={{ flex: 1, minWidth: 0 }}>
+            <div style={{ display: "flex", alignItems: "center", gap: 8, flexWrap: "wrap" }}>
+              <Link href={`/broker/${broker.slug}`} style={{ textDecoration: "none" }}>
+                <span style={{
+                  fontSize: compact ? 14 : 15,
+                  fontWeight: 700,
+                  color: "var(--text-primary)",
+                  fontFamily: "Space Grotesk, sans-serif",
+                }}>
+                  {broker.name}
+                </span>
+              </Link>
+              <ZoneBadge zone={broker.zone} />
+            </div>
+            <div style={{ fontSize: 12, color: "var(--text-muted)", marginTop: 2 }}>
+              {broker.city}, {broker.state}
+            </div>
+            {!compact && (
+              <div style={{ fontSize: 11, color: "var(--text-muted)", marginTop: 4, fontStyle: "italic" }}>
+                {broker.microcopy}
+              </div>
+            )}
+            {!compact && (
+              <div style={{ display: "flex", gap: 8, marginTop: 8, flexWrap: "wrap" }}>
+                {broker.mainNeighborhoods.slice(0, 2).map(n => (
+                  <span key={n} style={{ fontSize: 10, padding: "2px 8px", background: "#f1f5f9", borderRadius: 4, color: "#4a5568", fontWeight: 500 }}>{n}</span>
+                ))}
+              </div>
+            )}
+          </div>
         </div>
 
-        {/* Stats */}
-        {!compact && (
-          <div className="hide-mobile" style={{ display: "flex", gap: 24, alignItems: "center" }}>
-            <div style={{ textAlign: "center" }}>
-              <div style={{ fontSize: 12, color: "var(--text-muted)", marginBottom: 2 }}>Anúncios</div>
-              <div style={{ fontSize: 16, fontWeight: 700, fontFamily: "Space Grotesk, sans-serif", color: "var(--text-primary)" }}>
-                {broker.activeListings.toLocaleString("pt-BR")}
+        {/* Right side / Bottom on mobile: Stats and Score */}
+        <div className="flex items-center justify-end gap-6 w-full sm:w-auto border-t border-dashed sm:border-none border-gray-200 pt-3 sm:pt-0">
+          {/* Stats */}
+          {!compact && (
+            <div className="hide-mobile" style={{ display: "flex", gap: 24, alignItems: "center" }}>
+              <div style={{ textAlign: "center" }}>
+                <div style={{ fontSize: 12, color: "var(--text-muted)", marginBottom: 2 }}>Anúncios</div>
+                <div style={{ fontSize: 16, fontWeight: 700, fontFamily: "Space Grotesk, sans-serif", color: "var(--text-primary)" }}>
+                  {broker.activeListings.toLocaleString("pt-BR")}
+                </div>
+              </div>
+              <div style={{ textAlign: "center" }}>
+                <div style={{ fontSize: 12, color: "var(--text-muted)", marginBottom: 2 }}>Ticket</div>
+                <div style={{ fontSize: 14, fontWeight: 600, color: "var(--text-primary)" }}>
+                  {broker.avgTicket}
+                </div>
               </div>
             </div>
-            <div style={{ textAlign: "center" }}>
-              <div style={{ fontSize: 12, color: "var(--text-muted)", marginBottom: 2 }}>Ticket</div>
-              <div style={{ fontSize: 14, fontWeight: 600, color: "var(--text-primary)" }}>
-                {broker.avgTicket}
-              </div>
-            </div>
-          </div>
-        )}
-
-        {/* Score */}
-        <div style={{ textAlign: "right", display: "flex", flexDirection: "column", alignItems: "center", gap: 8, marginLeft: "auto" }}>
-          <ScoreBadge score={broker.score} label={broker.scoreLabel} />
-          {!compact && (
-            <div style={{ display: "flex", gap: 8 }}>
-              <Link href={`/broker/${broker.slug}`}>
-                <button className="btn-ghost" style={{ padding: "6px 12px", fontSize: 11 }}>Ver perfil</button>
-              </Link>
-              <Link href={`/compare?a=${broker.slug}`}>
-                <button className="btn-ghost" style={{ padding: "6px 12px", fontSize: 11 }}>Comparar</button>
-              </Link>
-            </div>
           )}
+
+          {/* Score */}
+          <div style={{ textAlign: "right", display: "flex", flexDirection: "column", alignItems: "center", gap: 8 }}>
+            <ScoreBadge score={broker.score} label={broker.scoreLabel} />
+            {!compact && (
+              <div style={{ display: "flex", gap: 8 }}>
+                <Link href={`/broker/${broker.slug}`}>
+                  <button className="btn-ghost" style={{ padding: "6px 12px", fontSize: 11 }}>Ver perfil</button>
+                </Link>
+                <Link href={`/compare?a=${broker.slug}`}>
+                  <button className="btn-ghost" style={{ padding: "6px 12px", fontSize: 11 }}>Comparar</button>
+                </Link>
+              </div>
+            )}
+          </div>
         </div>
       </div>
 
