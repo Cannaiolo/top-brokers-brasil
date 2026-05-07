@@ -6,7 +6,15 @@ import ShareCardGenerator from "@/components/ShareCardGenerator";
 import Link from "next/link";
 import { Search, X, Plus, Minus, Trophy, ArrowRight, Share2 } from "lucide-react";
 
-const DIMENSIONS = [
+type Dimension = {
+  key: keyof Broker | string;
+  label: string;
+  format: (b: Broker) => string;
+  isLower?: boolean;
+  noWinner?: boolean;
+};
+
+const DIMENSIONS: Dimension[] = [
   { key: "rank", label: "Rank", format: (b: Broker) => `#${b.rank}`, isLower: true },
   { key: "score", label: "Score de Presença", format: (b: Broker) => b.score.toString() },
   { key: "trustScore", label: "Score de Confiança", format: (b: Broker) => b.trustScore.toString() },
@@ -15,7 +23,7 @@ const DIMENSIONS = [
   { key: "mainNeighborhoods", label: "Bairros cobertos", format: (b: Broker) => b.mainNeighborhoods.length.toString() },
   { key: "zone", label: "Zona de ranking", format: (b: Broker) => b.zone, noWinner: true },
   { key: "movementValue", label: "Movimento (semana)", format: (b: Broker) => `${b.movement === "up" ? "+" : b.movement === "down" ? "-" : ""}${b.movementValue}` },
-] as const;
+];
 
 export default function ComparePage() {
   const [selected, setSelected] = useState<Broker[]>([brokers[0], brokers[5]]);
@@ -43,7 +51,7 @@ export default function ComparePage() {
     setSelected(selected.filter(b => b.id !== id));
   };
 
-  const getWinner = (dim: typeof DIMENSIONS[number]) => {
+  const getWinner = (dim: Dimension) => {
     if (dim.noWinner) return null;
     const vals = selected.map(b => {
       if (dim.key === "rank") return b.rank;
