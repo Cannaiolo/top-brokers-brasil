@@ -22,7 +22,7 @@ export default function HomePage() {
         padding: "80px 24px 72px",
       }}>
         <div style={{ maxWidth: 1200, margin: "0 auto" }}>
-          <div style={{ display: "grid", gridTemplateColumns: "1fr 1fr", gap: 64, alignItems: "center" }}>
+          <div className="grid grid-cols-1 lg:grid-cols-2 gap-12 lg:gap-16 items-center">
             {/* Left */}
             <div>
               <div style={{
@@ -99,7 +99,7 @@ export default function HomePage() {
             </div>
 
             {/* Right — live leaderboard mini */}
-            <div className="hide-mobile">
+            <div className="w-full mt-4 lg:mt-0">
               <div style={{
                 background: "white",
                 border: "1px solid var(--border)",
